@@ -640,7 +640,7 @@
           </div>
         </div>
 
-        <!-- SETTINGS PAGE -->
+        <!-- SETTINGS PAGE (DISEMPURNAKAN: ADA LOGO DAN SUBHEADER KOP) -->
         <div id="view-settings" class="hidden space-y-6">
           <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-3xl mx-auto">
             <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-100">
@@ -649,37 +649,63 @@
               </div>
               <div>
                 <h3 class="font-extrabold text-slate-800 text-base">Profil Sekolah & Lembar Pengesahan</h3>
-                <p class="text-xs text-slate-400">Data ini digunakan otomatis untuk Kop Surat dan Tanda Tangan Cetak</p>
+                <p class="text-xs text-slate-400">Atur Logo, Nama Instansi, Sub-Header Kop, dan Tanda Tangan Cetak</p>
               </div>
             </div>
 
             <form id="form-settings" onsubmit="saveSchoolSettings(event)" class="space-y-4 text-xs">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              <!-- Pengaturan Header / Kop Surat -->
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                <span class="font-bold text-blue-700 block uppercase tracking-wider text-[11px]">Identitas Header / Kop Surat</span>
+                
                 <div>
-                  <label class="font-bold text-slate-700 block mb-1">Nama Instansi / Sekolah</label>
-                  <input type="text" id="set-school-name" required class="w-full px-3 py-2 rounded-xl border border-slate-200 font-semibold focus:outline-none focus:border-blue-600">
+                  <label class="font-bold text-slate-700 block mb-1">Teks Baris Atas Kop Surat (Pemerintah / Yayasan / Dinas)</label>
+                  <input type="text" id="set-[governing-header]" placeholder="Contoh: PEMERINTAH DAERAH PROVINSI / KABUPATEN" class="w-full px-3 py-2 rounded-xl border border-slate-200 font-semibold focus:outline-none focus:border-blue-600 bg-white">
+                  <p class="text-[10px] text-slate-400 mt-1">Ubah baris ini sesuai instansi pembina (misal: YAYASAN PENDIDIKAN MAJU BERSAMA / DINAS PENDIDIKAN).</p>
                 </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">Nama Instansi / Sekolah</label>
+                    <input type="text" id="set-school-name" required class="w-full px-3 py-2 rounded-xl border border-slate-200 font-semibold focus:outline-none focus:border-blue-600 bg-white">
+                  </div>
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">Kelas Binaan</label>
+                    <input type="text" id="set-class-name" required class="w-full px-3 py-2 rounded-xl border border-slate-200 font-semibold focus:outline-none focus:border-blue-600 bg-white">
+                  </div>
+                </div>
+
                 <div>
-                  <label class="font-bold text-slate-700 block mb-1">Kelas Binaan</label>
-                  <input type="text" id="set-class-name" required class="w-full px-3 py-2 rounded-xl border border-slate-200 font-semibold focus:outline-none focus:border-blue-600">
+                  <label class="font-bold text-slate-700 block mb-1">Alamat Lengkap Sekolah & Kontak</label>
+                  <input type="text" id="set-school-address" required class="w-full px-3 py-2 rounded-xl border border-slate-200 font-semibold focus:outline-none focus:border-blue-600 bg-white">
+                </div>
+
+                <div>
+                  <label class="font-bold text-slate-700 block mb-1">Logo Kop Sekolah (Unggah Gambar / Masukkan URL)</label>
+                  <div class="flex items-center space-x-3">
+                    <div id="logo-preview-box" class="w-12 h-12 rounded-xl border border-slate-300 bg-white flex items-center justify-center overflow-hidden shrink-0">
+                      <i class="fa-solid fa-school text-slate-400 text-xl"></i>
+                    </div>
+                    <div class="flex-1 space-y-1.5">
+                      <input type="file" id="set-logo-file" accept="image/*" onchange="handleLogoUpload(event)" class="block w-full text-[11px] text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                      <input type="text" id="set-logo-url" oninput="handleLogoUrlInput()" placeholder="Atau tempel Link / URL Gambar Logo di sini..." class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-[11px] focus:outline-none focus:border-blue-600 bg-white">
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <label class="font-bold text-slate-700 block mb-1">Alamat Lengkap Sekolah & Kontak</label>
-                <input type="text" id="set-school-address" required class="w-full px-3 py-2 rounded-xl border border-slate-200 font-semibold focus:outline-none focus:border-blue-600">
-              </div>
-
+              <!-- Pengaturan Tanda Tangan / Pengesahan -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
                   <span class="font-bold text-blue-700 block uppercase tracking-wider text-[11px]">Kepala Sekolah</span>
                   <div>
                     <label class="font-semibold text-slate-600 block mb-1">Nama Kepala Sekolah</label>
-                    <input type="text" id="set-principal-name" required class="w-full px-3 py-2 rounded-lg border border-slate-200 font-semibold focus:outline-none focus:border-blue-600">
+                    <input type="text" id="set-principal-name" required class="w-full px-3 py-2 rounded-lg border border-slate-200 font-semibold focus:outline-none focus:border-blue-600 bg-white">
                   </div>
                   <div>
                     <label class="font-semibold text-slate-600 block mb-1">NIP Kepala Sekolah</label>
-                    <input type="text" id="set-principal-nip" required class="w-full px-3 py-2 rounded-lg border border-slate-200 font-semibold focus:outline-none focus:border-blue-600">
+                    <input type="text" id="set-principal-nip" required class="w-full px-3 py-2 rounded-lg border border-slate-200 font-semibold focus:outline-none focus:border-blue-600 bg-white">
                   </div>
                 </div>
 
@@ -687,11 +713,11 @@
                   <span class="font-bold text-orange-600 block uppercase tracking-wider text-[11px]">Wali Kelas</span>
                   <div>
                     <label class="font-semibold text-slate-600 block mb-1">Nama Wali Kelas</label>
-                    <input type="text" id="set-teacher-name" required class="w-full px-3 py-2 rounded-lg border border-slate-200 font-semibold focus:outline-none focus:border-blue-600">
+                    <input type="text" id="set-teacher-name" required class="w-full px-3 py-2 rounded-lg border border-slate-200 font-semibold focus:outline-none focus:border-blue-600 bg-white">
                   </div>
                   <div>
                     <label class="font-semibold text-slate-600 block mb-1">NIP Wali Kelas</label>
-                    <input type="text" id="set-teacher-nip" required class="w-full px-3 py-2 rounded-lg border border-slate-200 font-semibold focus:outline-none focus:border-blue-600">
+                    <input type="text" id="set-teacher-nip" required class="w-full px-3 py-2 rounded-lg border border-slate-200 font-semibold focus:outline-none focus:border-blue-600 bg-white">
                   </div>
                 </div>
               </div>
@@ -957,14 +983,16 @@
   <div id="print-modal-container" class="hidden"></div>
   <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
 
-  <!-- JAVASCRIPT LOGIKA UTAMA + STORAGE PERMANEN -->
+  <!-- JAVASCRIPT LOGIKA UTAMA -->
   <script>
     const STORAGE_KEY = "ABSEN_DIGITALKU_DATA_V1";
 
     const defaultState = {
       settings: {
+        governingHeader: "PEMERINTAH DAERAH PROVINSI / KABUPATEN",
         schoolName: "SMA NEGERI 1 TELADAN BANGSA",
         schoolAddress: "Jl. Pendidikan Luhur No. 45, Kompleks Akademika, Telp: (021) 7894561",
+        schoolLogo: "", // Base64 atau URL
         className: "Kelas X-A",
         academicYear: "2026/2027",
         principalName: "Dr. H. Bambang Sudiro, M.Pd.",
@@ -992,7 +1020,6 @@
 
     let state = { ...defaultState };
 
-    // FUNGSI PENYIMPANAN KE LOCALSTORAGE
     function saveStateToStorage() {
       try {
         const payload = {
@@ -1008,13 +1035,12 @@
       }
     }
 
-    // FUNGSI MEMBACA DARI LOCALSTORAGE
     function loadStateFromStorage() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           const parsed = JSON.parse(saved);
-          state.settings = parsed.settings || defaultState.settings;
+          state.settings = { ...defaultState.settings, ...(parsed.settings || {}) };
           state.students = parsed.students || defaultState.students;
           state.attendance = parsed.attendance || defaultState.attendance;
           state.incidents = parsed.incidents || defaultState.incidents;
@@ -1869,7 +1895,37 @@
       renderDashboard();
     }
 
+    // LOGIKA UNTUK PEMBACAAN DAN UPLOAD LOGO SEKOLAH
+    function updateLogoPreview(src) {
+      const box = document.getElementById('logo-preview-box');
+      if (src) {
+        box.innerHTML = `<img src="${src}" class="w-full h-full object-contain p-0.5">`;
+      } else {
+        box.innerHTML = `<i class="fa-solid fa-school text-slate-400 text-xl"></i>`;
+      }
+    }
+
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          state.settings.schoolLogo = evt.target.result;
+          document.getElementById('set-logo-url').value = "";
+          updateLogoPreview(evt.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleLogoUrlInput() {
+      const url = document.getElementById('set-logo-url').value.trim();
+      state.settings.schoolLogo = url;
+      updateLogoPreview(url);
+    }
+
     function populateSettingsForm() {
+      document.getElementById('set-[governing-header]').value = state.settings.governingHeader || defaultState.settings.governingHeader;
       document.getElementById('set-school-name').value = state.settings.schoolName;
       document.getElementById('set-class-name').value = state.settings.className;
       document.getElementById('set-school-address').value = state.settings.schoolAddress;
@@ -1878,12 +1934,18 @@
       document.getElementById('set-teacher-name').value = state.settings.teacherName;
       document.getElementById('set-teacher-nip').value = state.settings.teacherNip;
 
+      if (state.settings.schoolLogo && !state.settings.schoolLogo.startsWith('data:image')) {
+        document.getElementById('set-logo-url').value = state.settings.schoolLogo;
+      }
+      updateLogoPreview(state.settings.schoolLogo);
+
       document.getElementById('sidebar-teacher-name').innerText = state.settings.teacherName;
       document.getElementById('sidebar-class-name').innerText = `${state.settings.className} (${state.settings.academicYear})`;
     }
 
     function saveSchoolSettings(e) {
       e.preventDefault();
+      state.settings.governingHeader = document.getElementById('set-[governing-header]').value.trim();
       state.settings.schoolName = document.getElementById('set-school-name').value.trim();
       state.settings.className = document.getElementById('set-class-name').value.trim();
       state.settings.schoolAddress = document.getElementById('set-school-address').value.trim();
@@ -1897,15 +1959,21 @@
       showToast("Data instansi dan pengesahan berhasil diperbarui!", "success");
     }
 
+    // ENGINE PRINT DENGAN HEADER DINAMIS (LOGO & TEKS PEMERINTAH / YAYASAN)
     function generateSchoolHeaderHTML(docTitle, docSubtitle = "") {
+      const govText = state.settings.governingHeader || "PEMERINTAH DAERAH PROVINSI / KABUPATEN";
+      const logoHTML = state.settings.schoolLogo 
+        ? `<img src="${state.settings.schoolLogo}" class="w-16 h-16 object-contain">`
+        : `<div class="w-16 h-16 rounded-full bg-slate-900 text-white flex items-center justify-center text-2xl font-bold"><i class="fa-solid fa-school"></i></div>`;
+
       return `
         <div class="pb-3 mb-4 border-b-4 border-double border-slate-900 text-center">
           <div class="flex items-center justify-between">
-            <div class="w-16 h-16 rounded-full bg-slate-900 text-white flex items-center justify-center text-2xl font-bold">
-              <i class="fa-solid fa-school"></i>
+            <div class="w-16 h-16 flex items-center justify-center">
+              ${logoHTML}
             </div>
             <div class="flex-1 px-4">
-              <h2 class="text-xs tracking-widest uppercase font-bold text-slate-600">PEMERINTAH DAERAH PROVINSI / KABUPATEN</h2>
+              <h2 class="text-xs tracking-widest uppercase font-bold text-slate-600">${escapeHtml(govText)}</h2>
               <h1 class="text-xl font-black uppercase text-slate-900 tracking-wide">${escapeHtml(state.settings.schoolName)}</h1>
               <p class="text-[11px] text-slate-600 mt-0.5">${escapeHtml(state.settings.schoolAddress)}</p>
             </div>
@@ -2216,7 +2284,6 @@
         .replace(/'/g, '&#039;');
     }
 
-    // INISIALISASI
     window.onload = function() {
       loadStateFromStorage();
       initSeedAttendance();
